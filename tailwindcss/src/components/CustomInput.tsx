@@ -6,11 +6,13 @@ type CustomInputProps = {
   placeholder: string;
   name: string;
   type: string;
+  className?: string;
 };
 
 export const CustomInput = ({
   label,
   placeholder,
+  className,
   ...props
 }: CustomInputProps) => {
   const [field, meta] = useField(props);
@@ -23,7 +25,7 @@ export const CustomInput = ({
       <input
         {...field}
         {...props}
-        className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+        className={"appearance-none border rounded w-full py-2 px-3 text-grey-darker " + className}
         placeholder={placeholder}
       />
       {meta.touched && meta.error && <ErrorLabel>{meta.error}</ErrorLabel>}
