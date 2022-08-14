@@ -1,7 +1,27 @@
-import { FiPlus } from "react-icons/fi";
-
 import { CustomInput } from "../CustomInput";
 import { CustomButton } from "../CustomButton";
+import { Formik, Form as FormikForm } from "formik";
+import { CustomDropdown } from "../CustomDropdown";
+import {
+  formInitialValues,
+  formSchemaValidation,
+} from "../../validations/Form";
+
+type QuestionsType = {
+  description: string;
+  required: boolean;
+};
+
+type FormType = {
+  title: string;
+  description: string;
+  questions: QuestionsType[];
+};
+
+const onSubmit = async (values: FormType) => {
+  console.log(values);
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+};
 
 export const Form = () => {
   return (
@@ -11,18 +31,44 @@ export const Form = () => {
           <div className="py-4 px-8 text-black text-xl border-b border-grey-lighter">
             Create your form
           </div>
-          <div className="py-4 px-8">
-            <CustomInput label="Title" placeholder="Digite um título.." />
-            <CustomInput label="Description" placeholder="Digite uma descrição.." />
+          <Formik
+            initialValues={formInitialValues}
+            validationSchema={formSchemaValidation}
+            onSubmit={onSubmit}
+          >
+            {({ values, errors, isSubmitting }) => (
+              <FormikForm autoComplete="off">
+                <div className="py-4 px-8">
+                  <CustomInput
+                    label="Title"
+                    name="title"
+                    type="text"
+                    placeholder="Digite um título.."
+                  />
+                  <CustomInput
+                    label="Description"
+                    name="description"
+                    type="text"
+                    placeholder="Digite uma descrição.."
+                  />
 
-            <div className="flex justify-between mt-8">
-              <CustomButton className="bg-gray-800" type="button">
-                <FiPlus />
-                Add item
-              </CustomButton>
-              <CustomButton type="submit">Submit</CustomButton>
-            </div>
-          </div>
+                  <div className="flex justify-between mt-8">
+                    {/* <CustomDropdown
+                      buttonName="Options"
+                      options={[
+                        { id: "1", description: "Text" },
+                        { id: "2", description: "Score" },
+                      ]}
+                    /> */}
+
+                    <CustomButton disabled={isSubmitting} type="submit">
+                      Submit
+                    </CustomButton>
+                  </div>
+                </div>
+              </FormikForm>
+            )}
+          </Formik>
         </div>
       </div>
     </div>

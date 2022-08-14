@@ -1,9 +1,9 @@
 type ErrorLabelProps = {
-  message: string;
+  children: React.ReactNode;
 }
 
-export const ErrorLabel = ({message}: ErrorLabelProps) => {
+export const ErrorLabel = ({children}: ErrorLabelProps) => {
   return (
-    <p className="text-red-500 text-xs mt-1">{message}</p>
+    <p className="text-red-500 text-xs mt-1">{children}</p>
   )
 }
